@@ -41,9 +41,16 @@ public class planner {
             //  - View stock
             //  - create appointment
     
+        // --APPOINTMENT Interface--
+    
+        // --CHECKOUT Interface--
+    
     
     //COMPLETED : 
         //  - made starting packages,classes and JFrames
+    
+    //Classes:
+    //  - Employee, Task, TaskAssignment, TaskTimeLog, User
     
     
 }
