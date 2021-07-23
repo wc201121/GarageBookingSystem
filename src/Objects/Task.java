@@ -4,52 +4,63 @@ import java.time.LocalDate;
 
 public class Task {
 
-    private int Project_ProjectID;
-    private String Project_Title;
-    private LocalDate Project_StartDate;
-    private LocalDate Project_EndDate;
+    private int Task_TaskID;
+    private String Task_Title;
+    private LocalDate Task_StartDate;
+    private LocalDate Task_EndDate;
+    private String Task_Desc;
 
-    public Task(int Project_ProjectID, String Project_Title, LocalDate Project_StartDate, LocalDate Project_EndDate) {
-        this.Project_ProjectID = Project_ProjectID;
-        this.Project_Title = Project_Title;
-        this.Project_StartDate = Project_StartDate;
-        this.Project_EndDate = Project_EndDate;
+    public Task(int Task_TaskID, String Task_Title, LocalDate Task_StartDate, LocalDate Task_EndDate, String Task_Desc) {
+        this.Task_TaskID = Task_TaskID;
+        this.Task_Title = Task_Title;
+        this.Task_StartDate = Task_StartDate;
+        this.Task_EndDate = Task_EndDate;
+        this.Task_Desc = Task_Desc;
     }
 
     public String getString() {
-        return "Project Title: " + Project_Title + "Start Date: " + Project_StartDate + "End Date: " + Project_EndDate;
+        return "Task Title: " + Task_Title + "Task Start: " + Task_StartDate + "Task End: " + Task_EndDate + "Task Desc: " + Task_Desc;
+
     }
 
-    public int getProject_ProjectID() {
-        return Project_ProjectID;
+    public int getTask_TaskID() {
+        return Task_TaskID;
     }
 
-    public void setProject_ProjectID(int Project_ProjectID) {
-        this.Project_ProjectID = Project_ProjectID;
+    public void setTask_TaskID(int Task_TaskID) {
+        this.Task_TaskID = Task_TaskID;
     }
 
-    public String getProject_Title() {
-        return Project_Title;
+    public String getTask_Title() {
+        return Task_Title;
     }
 
-    public void setProject_Title(String Project_Title) {
-        this.Project_Title = Project_Title;
+    public void setTask_Title(String Task_Title) {
+        this.Task_Title = Task_Title;
     }
 
-    public LocalDate getProject_StartDate() {
-        return Project_StartDate;
+    public LocalDate getTask_StartDate() {
+        return Task_StartDate;
     }
 
-    public void setProject_StartDate(LocalDate Project_StartDate) {
-        this.Project_StartDate = Project_StartDate;
+    public void setTask_StartDate(LocalDate Task_StartDate) {
+        this.Task_StartDate = Task_StartDate;
     }
 
-    public LocalDate getProject_EndDate() {
-        return Project_EndDate;
+    public LocalDate getTask_EndDate() {
+        return Task_EndDate;
     }
 
-    public void setProject_EndDate(LocalDate Project_EndDate) {
-        this.Project_EndDate = Project_EndDate;
+    public void setTask_EndDate(LocalDate Task_EndDate) {
+        this.Task_EndDate = Task_EndDate;
+    }
+
+    public String getTask_Desc() {
+        return Task_Desc;
+    }
+
+    public void setTask_Desc(String Task_Desc) {
+        this.Task_Desc = Task_Desc;
     }
 
 }

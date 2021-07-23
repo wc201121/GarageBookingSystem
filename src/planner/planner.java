@@ -50,7 +50,7 @@ public class planner {
         //  - made starting packages,classes and JFrames
     
     //Classes:
-    //  - Employee, Task, TaskAssignment, TaskTimeLog, User
+    //  - ALL Objects 
     
     
 }
