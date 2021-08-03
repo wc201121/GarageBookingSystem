@@ -43,14 +43,14 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jButton3" min="-2" pref="247" max="-2" attributes="0"/>
-                          <Component id="jButton2" min="-2" pref="247" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" pref="247" max="-2" attributes="0"/>
+                          <Component id="bookappointmentButton" min="-2" pref="247" max="-2" attributes="0"/>
+                          <Component id="createaccountButton" min="-2" pref="247" max="-2" attributes="0"/>
+                          <Component id="loginButton" min="-2" pref="247" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="373" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jButton4" pref="175" max="32767" attributes="0"/>
-                          <Component id="jButton5" max="32767" attributes="0"/>
+                          <Component id="staffloginButton" pref="175" max="32767" attributes="0"/>
+                          <Component id="exitButton" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                   </Group>
@@ -66,17 +66,17 @@
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="68" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="99" max="-2" attributes="0"/>
+                      <Component id="loginButton" min="-2" pref="99" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" pref="93" max="-2" attributes="0"/>
+                      <Component id="createaccountButton" min="-2" pref="93" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                      <Component id="jButton3" min="-2" pref="99" max="-2" attributes="0"/>
+                      <Component id="bookappointmentButton" min="-2" pref="99" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="350" max="-2" attributes="0"/>
-                      <Component id="jButton4" min="-2" pref="57" max="-2" attributes="0"/>
+                      <Component id="staffloginButton" min="-2" pref="57" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton5" min="-2" pref="58" max="-2" attributes="0"/>
+                      <Component id="exitButton" min="-2" pref="58" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="60" max="32767" attributes="0"/>
@@ -85,33 +85,45 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="loginButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="LOG-IN"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginButtonActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="createaccountButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="CREATE ACCOUNT"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createaccountButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="bookappointmentButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="BOOK APPOINTMENT"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bookappointmentButtonActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="staffloginButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="STAFF MENU"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="staffloginButtonActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton5">
+    <Component class="javax.swing.JButton" name="exitButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="EXIT"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>

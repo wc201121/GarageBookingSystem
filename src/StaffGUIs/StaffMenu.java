@@ -5,6 +5,8 @@
  */
 package StaffGUIs;
 
+import UserGUIs.*;
+
 /**
  *
  * @author wasim
@@ -28,42 +30,82 @@ public class StaffMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        bookappointmentButton = new javax.swing.JButton();
+        changedetailsButton = new javax.swing.JButton();
+        deleteaccountButton = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
+        viewstockButton = new javax.swing.JButton();
+        viewusersButton = new javax.swing.JButton();
+        addstaffButton = new javax.swing.JButton();
+        viewstaffButton = new javax.swing.JButton();
+        timesheetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Staff Menu");
 
-        jButton1.setText("BOOK APPOINTMENT");
-
-        jButton2.setText("CHANGE DETAILS");
-
-        jButton3.setText("DELETE ACCOUNT");
-
-        jButton4.setText("logout");
-
-        jButton5.setText("VIEW STOCK");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        bookappointmentButton.setText("BOOK APPOINTMENT");
+        bookappointmentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                bookappointmentButtonActionPerformed(evt);
             }
         });
 
-        jButton6.setText("VIEW USERS");
+        changedetailsButton.setText("CHANGE DETAILS");
+        changedetailsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changedetailsButtonActionPerformed(evt);
+            }
+        });
 
-        jButton7.setText("ADD STAFF");
+        deleteaccountButton.setText("DELETE ACCOUNT");
+        deleteaccountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteaccountButtonActionPerformed(evt);
+            }
+        });
 
-        jButton8.setText("VIEW STAFF");
+        logoutButton.setText("logout");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
 
-        jButton9.setText("TIMESHEET");
+        viewstockButton.setText("VIEW STOCK");
+        viewstockButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewstockButtonActionPerformed(evt);
+            }
+        });
+
+        viewusersButton.setText("VIEW USERS");
+        viewusersButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewusersButtonActionPerformed(evt);
+            }
+        });
+
+        addstaffButton.setText("ADD STAFF");
+        addstaffButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addstaffButtonActionPerformed(evt);
+            }
+        });
+
+        viewstaffButton.setText("VIEW STAFF");
+        viewstaffButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewstaffButtonActionPerformed(evt);
+            }
+        });
+
+        timesheetButton.setText("TIMESHEET");
+        timesheetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timesheetButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,23 +115,23 @@ public class StaffMenu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(117, 117, 117)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bookappointmentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                                .addComponent(deleteaccountButton, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                                 .addComponent(jLabel1)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(changedetailsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(118, 118, 118)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(viewstockButton, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                            .addComponent(viewusersButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(viewstaffButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(timesheetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(addstaffButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -97,38 +139,79 @@ public class StaffMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(80, 80, 80)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bookappointmentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(changedetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(viewstockButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(viewusersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(viewstaffButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(timesheetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addstaffButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteaccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void viewstockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewstockButtonActionPerformed
+        ViewStock vs = new ViewStock();
+        vs.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_viewstockButtonActionPerformed
+
+    private void bookappointmentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookappointmentButtonActionPerformed
+        BookAppointment ba = new BookAppointment();
+        ba.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bookappointmentButtonActionPerformed
+
+    private void changedetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changedetailsButtonActionPerformed
+
+    }//GEN-LAST:event_changedetailsButtonActionPerformed
+
+    private void deleteaccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteaccountButtonActionPerformed
+
+    }//GEN-LAST:event_deleteaccountButtonActionPerformed
+
+    private void viewusersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewusersButtonActionPerformed
+        ViewUsers vu = new ViewUsers();
+        vu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_viewusersButtonActionPerformed
+
+    private void viewstaffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewstaffButtonActionPerformed
+        ViewEmployees ve = new ViewEmployees();
+        ve.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_viewstaffButtonActionPerformed
+
+    private void timesheetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timesheetButtonActionPerformed
+        ViewTimesheet vt = new ViewTimesheet();
+        vt.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_timesheetButtonActionPerformed
+
+    private void addstaffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addstaffButtonActionPerformed
+        AddNewEmployee ane = new AddNewEmployee();
+        ane.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_addstaffButtonActionPerformed
+
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,15 +249,15 @@ public class StaffMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton addstaffButton;
+    private javax.swing.JButton bookappointmentButton;
+    private javax.swing.JButton changedetailsButton;
+    private javax.swing.JButton deleteaccountButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton logoutButton;
+    private javax.swing.JButton timesheetButton;
+    private javax.swing.JButton viewstaffButton;
+    private javax.swing.JButton viewstockButton;
+    private javax.swing.JButton viewusersButton;
     // End of variables declaration//GEN-END:variables
 }

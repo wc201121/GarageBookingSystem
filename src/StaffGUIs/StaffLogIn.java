@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package StaffGUIs;
 
-/**
- *
- * @author wc201121
- */
+import UserGUIs.*;
+import Objects.*;
+import LibraryFunctions.*;
+
 public class StaffLogIn extends javax.swing.JFrame {
 
     /**
@@ -16,6 +12,7 @@ public class StaffLogIn extends javax.swing.JFrame {
      */
     public StaffLogIn() {
         initComponents();
+        ErrorMessage.setVisible(false);
     }
 
     /**
@@ -30,12 +27,12 @@ public class StaffLogIn extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        StaffID = new javax.swing.JTextField();
+        Password = new javax.swing.JPasswordField();
+        loginButton = new javax.swing.JButton();
+        ErrorMessage = new javax.swing.JLabel();
+        forgotpasswordButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,13 +42,23 @@ public class StaffLogIn extends javax.swing.JFrame {
 
         jLabel3.setText("Password");
 
-        jButton1.setText("login");
+        loginButton.setText("login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
-        jLabel4.setText("invalid login credentials");
+        ErrorMessage.setText("invalid login credentials");
 
-        jButton2.setText("forgot password?");
+        forgotpasswordButton.setText("forgot password?");
 
-        jButton3.setText("back");
+        backButton.setText("back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,18 +74,18 @@ public class StaffLogIn extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(112, 112, 112)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jButton2)
+                            .addComponent(ErrorMessage)
+                            .addComponent(forgotpasswordButton)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(StaffID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                                    .addComponent(Password, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(61, 61, 61)
-                                .addComponent(jButton1)))))
+                                .addComponent(loginButton)))))
                 .addGap(82, 82, 82))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton3)
+                .addComponent(backButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -89,24 +96,43 @@ public class StaffLogIn extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(StaffID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1))
+                        .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(loginButton))
                     .addComponent(jLabel3))
                 .addGap(54, 54, 54)
-                .addComponent(jLabel4)
+                .addComponent(ErrorMessage)
                 .addGap(37, 37, 37)
-                .addComponent(jButton2)
+                .addComponent(forgotpasswordButton)
                 .addGap(29, 29, 29)
-                .addComponent(jButton3)
+                .addComponent(backButton)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        MainMenu mm = new MainMenu();
+        mm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+
+        String userID = StaffID.getText();
+        String password = new String(Password.getPassword());
+        if (!Repository.EmployeeLogIn(userID, password)) {
+            ErrorMessage.setVisible(true);
+        } else {
+            MainMenu main = new MainMenu();
+            main.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -144,14 +170,14 @@ public class StaffLogIn extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel ErrorMessage;
+    private javax.swing.JPasswordField Password;
+    private javax.swing.JTextField StaffID;
+    private javax.swing.JButton backButton;
+    private javax.swing.JButton forgotpasswordButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton loginButton;
     // End of variables declaration//GEN-END:variables
 }

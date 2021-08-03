@@ -5,63 +5,63 @@ import java.text.SimpleDateFormat;
 
 public class TaskTimeLog {
 
-    private int ProjectTimeLog_Id;
-    private Date ProjectTimeLog_DateLogged;
-    private String ProjectTimeLog_DescriptionOfWork;
-    private int ProjectTimeLog_HoursLogged;
-    private int ProjectTimeLog_ProjectAssignmentId;
+    private int TaskTimeLog_Id;
+    private Date TaskTimeLog_DateLogged;
+    private String TaskTimeLog_DescriptionOfWork;
+    private int TaskTimeLog_HoursLogged;
+    private int TaskTimeLog_TaskAssignmentId;
 
-    public TaskTimeLog(int ProjectTimeLog_Id, Date ProjectTimeLog_DateLogged, String ProjectTimeLog_DescriptionOfWork, int ProjectTimeLog_HoursLogged, int ProjectTimeLog_ProjectAssignmentId) {
-        this.ProjectTimeLog_Id = ProjectTimeLog_Id;
-        this.ProjectTimeLog_DateLogged = ProjectTimeLog_DateLogged;
-        this.ProjectTimeLog_DescriptionOfWork = ProjectTimeLog_DescriptionOfWork;
-        this.ProjectTimeLog_HoursLogged = ProjectTimeLog_HoursLogged;
-        this.ProjectTimeLog_ProjectAssignmentId = ProjectTimeLog_ProjectAssignmentId;
+    public TaskTimeLog(int TaskTimeLog_Id, Date TaskTimeLog_DateLogged, String TaskTimeLog_DescriptionOfWork, int TaskTimeLog_HoursLogged, int TaskTimeLog_TaskAssignmentId) {
+        this.TaskTimeLog_Id = TaskTimeLog_Id;
+        this.TaskTimeLog_DateLogged = TaskTimeLog_DateLogged;
+        this.TaskTimeLog_DescriptionOfWork = TaskTimeLog_DescriptionOfWork;
+        this.TaskTimeLog_HoursLogged = TaskTimeLog_HoursLogged;
+        this.TaskTimeLog_TaskAssignmentId = TaskTimeLog_TaskAssignmentId;
     }
 
     public String getString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return "Date Logged: " + dateFormat.format(ProjectTimeLog_DateLogged) + ", Description of work: " + ProjectTimeLog_DescriptionOfWork + ", Hours logged: " + ProjectTimeLog_HoursLogged;
+        return "Date Logged: " + dateFormat.format(TaskTimeLog_DateLogged) + ", Description of work: " + TaskTimeLog_DescriptionOfWork + ", Hours logged: " + TaskTimeLog_HoursLogged;
     }
 
-    public int getProjectTimeLog_Id() {
-        return ProjectTimeLog_Id;
+    public int getTaskTimeLog_Id() {
+        return TaskTimeLog_Id;
     }
 
-    public void setProjectTimeLog_Id(int ProjectTimeLog_Id) {
-        this.ProjectTimeLog_Id = ProjectTimeLog_Id;
+    public void setTaskTimeLog_Id(int TaskTimeLog_Id) {
+        this.TaskTimeLog_Id = TaskTimeLog_Id;
     }
 
-    public Date getProjectTimeLog_DateLogged() {
-        return ProjectTimeLog_DateLogged;
+    public Date getTaskTimeLog_DateLogged() {
+        return TaskTimeLog_DateLogged;
     }
 
-    public void setProjectTimeLog_DateLogged(Date ProjectTimeLog_DateLogged) {
-        this.ProjectTimeLog_DateLogged = ProjectTimeLog_DateLogged;
+    public void setTaskTimeLog_DateLogged(Date TaskTimeLog_DateLogged) {
+        this.TaskTimeLog_DateLogged = TaskTimeLog_DateLogged;
     }
 
-    public String getProjectTimeLog_DescriptionOfWork() {
-        return ProjectTimeLog_DescriptionOfWork;
+    public String getTaskTimeLog_DescriptionOfWork() {
+        return TaskTimeLog_DescriptionOfWork;
     }
 
-    public void setProjectTimeLog_DescriptionOfWork(String ProjectTimeLog_DescriptionOfWork) {
-        this.ProjectTimeLog_DescriptionOfWork = ProjectTimeLog_DescriptionOfWork;
+    public void setTaskTimeLog_DescriptionOfWork(String TaskTimeLog_DescriptionOfWork) {
+        this.TaskTimeLog_DescriptionOfWork = TaskTimeLog_DescriptionOfWork;
     }
 
-    public int getProjectTimeLog_HoursLogged() {
-        return ProjectTimeLog_HoursLogged;
+    public int getTaskTimeLog_HoursLogged() {
+        return TaskTimeLog_HoursLogged;
     }
 
-    public void setProjectTimeLog_HoursLogged(int ProjectTimeLog_HoursLogged) {
-        this.ProjectTimeLog_HoursLogged = ProjectTimeLog_HoursLogged;
+    public void setTaskTimeLog_HoursLogged(int TaskTimeLog_HoursLogged) {
+        this.TaskTimeLog_HoursLogged = TaskTimeLog_HoursLogged;
     }
 
-    public int getProjectTimeLog_ProjectAssignmentId() {
-        return ProjectTimeLog_ProjectAssignmentId;
+    public int getTaskTimeLog_TaskAssignmentId() {
+        return TaskTimeLog_TaskAssignmentId;
     }
 
-    public void setProjectTimeLog_ProjectAssignmentId(int ProjectTimeLog_ProjectAssignmentId) {
-        this.ProjectTimeLog_ProjectAssignmentId = ProjectTimeLog_ProjectAssignmentId;
+    public void setTaskTimeLog_TaskAssignmentId(int TaskTimeLog_TaskAssignmentId) {
+        this.TaskTimeLog_TaskAssignmentId = TaskTimeLog_TaskAssignmentId;
     }
 
 }

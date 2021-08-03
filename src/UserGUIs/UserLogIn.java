@@ -5,6 +5,9 @@
  */
 package UserGUIs;
 
+import LibraryFunctions.*;
+import Objects.*;
+
 /**
  *
  * @author wc201121
@@ -16,6 +19,7 @@ public class UserLogIn extends javax.swing.JFrame {
      */
     public UserLogIn() {
         initComponents();
+        ErrorMessage.setVisible(false);
     }
 
     /**
@@ -29,14 +33,14 @@ public class UserLogIn extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        UserID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel4 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        createaccountButton = new javax.swing.JButton();
+        forgotpasswordButton = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
+        Password = new javax.swing.JPasswordField();
+        ErrorMessage = new javax.swing.JLabel();
+        backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,18 +50,28 @@ public class UserLogIn extends javax.swing.JFrame {
 
         jLabel3.setText("Password");
 
-        jButton1.setText("create account");
-
-        jButton2.setText("forgot password?");
-
-        jButton3.setText("login");
-
-        jLabel4.setText("invalid user credentials");
-
-        jButton4.setText("back");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        createaccountButton.setText("create account");
+        createaccountButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                createaccountButtonActionPerformed(evt);
+            }
+        });
+
+        forgotpasswordButton.setText("forgot password?");
+
+        loginButton.setText("login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
+
+        ErrorMessage.setText("invalid user credentials");
+
+        backButton.setText("back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -78,19 +92,19 @@ public class UserLogIn extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-                                            .addComponent(jTextField1))
+                                            .addComponent(Password, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                                            .addComponent(UserID))
                                         .addGap(61, 61, 61)
-                                        .addComponent(jButton3))
+                                        .addComponent(loginButton))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1)
+                                        .addComponent(createaccountButton)
                                         .addGap(76, 76, 76)
-                                        .addComponent(jButton2))
-                                    .addComponent(jLabel4)))
+                                        .addComponent(forgotpasswordButton))
+                                    .addComponent(ErrorMessage)))
                             .addComponent(jLabel1)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton4)))
+                        .addComponent(backButton)))
                 .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -100,32 +114,53 @@ public class UserLogIn extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3)
+                    .addComponent(loginButton)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(UserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(49, 49, 49)
-                .addComponent(jLabel4)
+                .addComponent(ErrorMessage)
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(createaccountButton)
+                    .addComponent(forgotpasswordButton))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(backButton)
                 .addGap(20, 20, 20))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        MainMenu mm = new MainMenu();
+        mm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+
+        String userID = UserID.getText();
+        String password = new String(Password.getPassword());
+        if (!Repository.UserLogIn(userID, password)) {
+            ErrorMessage.setVisible(true);
+        } else {
+            MainMenu main = new MainMenu();
+            main.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void createaccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createaccountButtonActionPerformed
+        AddNewUser anu = new AddNewUser();
+        anu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_createaccountButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,15 +198,15 @@ public class UserLogIn extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel ErrorMessage;
+    private javax.swing.JPasswordField Password;
+    private javax.swing.JTextField UserID;
+    private javax.swing.JButton backButton;
+    private javax.swing.JButton createaccountButton;
+    private javax.swing.JButton forgotpasswordButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton loginButton;
     // End of variables declaration//GEN-END:variables
 }

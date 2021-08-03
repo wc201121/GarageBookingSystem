@@ -1,21 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package StaffGUIs;
 
-/**
- *
- * @author wc201121
- */
+import java.util.ArrayList;
+import LibraryFunctions.*;
+import Objects.*;
+import java.sql.ResultSet;
+
 public class ViewEmployees extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ViewEmployees
-     */
+    private ArrayList<Employee> employeeList = new ArrayList<>();    
+
     public ViewEmployees() {
         initComponents();
+    }
+    
+        public void updateTable() {
+        try {
+           employeeList = Repository.getAllEmployees();
+
+            String[] columns = {"First Name", "Last name", "Department", "Phone number", "Houry rate"};;//Sets column names for table;
+
+            Object[][] rows = new Object[employeeList.size()][columns.length];//2D object array used for tableModel rows
+
+            for (int i = 0; i < employeeList.size(); i++) { //Loops through all of the rows in the database
+                rows[i][0] = employeeList.get(i).getEmployee_Fname();
+                rows[i][1] = employeeList.get(i).getEmployee_Lname();
+                rows[i][2] = employeeList.get(i).getEmployee_Dept();
+                rows[i][3] = employeeList.get(i).getEmployee_Phone();
+                rows[i][4] = employeeList.get(i).getEmployee_HourlyRate();
+            }
+
+            //This sets up our new tableModel
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    rows,
+                    columns
+            ));
+
+        } catch (Exception e) {
+            System.out.println("Error in ViewEmployees: " + e);
+        }
     }
 
     /**
@@ -30,17 +52,17 @@ public class ViewEmployees extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        backButton = new javax.swing.JButton();
+        FirstNameField = new javax.swing.JTextField();
+        LastNameField = new javax.swing.JTextField();
+        DepartmentField = new javax.swing.JTextField();
+        HourlyRateField = new javax.swing.JTextField();
+        PhoneNumberField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        confirmButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,7 +71,12 @@ public class ViewEmployees extends javax.swing.JFrame {
 
         jLabel1.setText("View Employees");
 
-        jButton1.setText("back");
+        backButton.setText("back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("First Name");
 
@@ -59,7 +86,12 @@ public class ViewEmployees extends javax.swing.JFrame {
 
         jLabel5.setText("Hourly Rate");
 
-        jButton2.setText("confirm");
+        confirmButton.setText("confirm");
+        confirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmButtonActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Phone Number");
 
@@ -74,7 +106,7 @@ public class ViewEmployees extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1)))
+                        .addComponent(backButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(57, Short.MAX_VALUE)
@@ -85,26 +117,26 @@ public class ViewEmployees extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(FirstNameField)
+                            .addComponent(LastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(78, 78, 78)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(DepartmentField)
+                            .addComponent(HourlyRateField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(69, 69, 69)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(PhoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(110, 110, 110))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))))
+                                .addComponent(confirmButton))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1004, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55))
         );
@@ -117,27 +149,68 @@ public class ViewEmployees extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FirstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DepartmentField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PhoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HourlyRateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel5)
-                    .addComponent(jButton2))
+                    .addComponent(confirmButton))
                 .addGap(9, 9, 9)
-                .addComponent(jButton1)
+                .addComponent(backButton)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        StaffMenu mm = new StaffMenu();
+        mm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
+        Employee SelectedEmployee = getSelectedEmployee();
+        if(SelectedEmployee!=null){
+            if(!FirstNameField.getText().equals("")){
+                SelectedEmployee.setEmployee_Fname(FirstNameField.getText());
+            }
+            if(!LastNameField.getText().equals("")){
+                SelectedEmployee.setEmployee_Lname(LastNameField.getText());
+            }
+            if(!PhoneNumberField.getText().equals("")){
+                SelectedEmployee.setEmployee_Phone(PhoneNumberField.getText());
+            }
+            if(!HourlyRateField.getText().equals("")){
+                SelectedEmployee.setEmployee_HourlyRate(Double.parseDouble(HourlyRateField.getText()));
+            }
+            if(!DepartmentField.getText().equals("")){
+                SelectedEmployee.setEmployee_Dept(DepartmentField.getText());
+            }
+            
+            Repository.updateEmployee(SelectedEmployee);
+        }
+    }//GEN-LAST:event_confirmButtonActionPerformed
+
+        public Employee getSelectedEmployee(){
+        //Gets the 
+        String EmployeeFName = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
+        String EmployeeLName = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        for (int i = 0; i < employeeList.size(); i++) {
+            if(employeeList.get(i).getEmployee_Fname().equals(EmployeeFName) && employeeList.get(i).getEmployee_Lname().equals(EmployeeLName)){
+                return employeeList.get(i);
+            }
+        }
+        return null;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -174,8 +247,13 @@ public class ViewEmployees extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JTextField DepartmentField;
+    private javax.swing.JTextField FirstNameField;
+    private javax.swing.JTextField HourlyRateField;
+    private javax.swing.JTextField LastNameField;
+    private javax.swing.JTextField PhoneNumberField;
+    private javax.swing.JButton backButton;
+    private javax.swing.JButton confirmButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -184,10 +262,5 @@ public class ViewEmployees extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }
