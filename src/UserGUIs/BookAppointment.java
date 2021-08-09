@@ -5,11 +5,52 @@
  */
 package UserGUIs;
 
+import LibraryFunctions.*;
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Properties;
+import javax.swing.JFrame;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author wasim
  */
 public class BookAppointment extends javax.swing.JFrame {
+    
+    int ClientID = -1;
+    String firstName = null;
+    boolean viewingBookings = false;
 
     /**
      * Creates new form BookAppointment
@@ -29,8 +70,7 @@ public class BookAppointment extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        bookingTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -39,12 +79,15 @@ public class BookAppointment extends javax.swing.JFrame {
         jTextArea2 = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
+        findRoomButton = new javax.swing.JButton();
+        dateButton = new javax.swing.JButton();
+        startDateLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Book Appointment");
 
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(bookingTable);
 
         jLabel3.setText("User/Car Details");
 
@@ -67,6 +110,22 @@ public class BookAppointment extends javax.swing.JFrame {
             }
         });
 
+        findRoomButton.setText("FIND ROOM");
+        findRoomButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                findRoomButtonActionPerformed(evt);
+            }
+        });
+
+        dateButton.setText("pick date");
+        dateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateButtonActionPerformed(evt);
+            }
+        });
+
+        startDateLabel.setText("(start date)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,16 +137,24 @@ public class BookAppointment extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(58, 58, 58)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(58, 58, 58)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel5)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(findRoomButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane3)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(dateButton)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(startDateLabel))))
                             .addComponent(jLabel1)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -104,17 +171,21 @@ public class BookAppointment extends javax.swing.JFrame {
                         .addGap(37, 37, 37)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
+                        .addGap(55, 55, 55)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(63, 63, 63)
+                            .addComponent(dateButton)
+                            .addComponent(startDateLabel))
+                        .addGap(61, 61, 61)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(findRoomButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane3))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(backButton)
@@ -130,6 +201,129 @@ public class BookAppointment extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
+    private void dateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateButtonActionPerformed
+        JFrame frame = new JFrame("Grid Design");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(350, 70);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
+        frame.setVisible(true);
+
+        UtilDateModel model = new UtilDateModel();
+        Properties p = new Properties();
+        p.put("text.today", "Today");
+        p.put("text.month", "Month");
+        p.put("text.year", "Year");
+
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+
+        datePicker.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                startDateLabel.setText(datePicker.getJFormattedTextField().getText());
+                frame.dispose();
+            }
+        });
+
+        frame.add(datePicker);
+        frame.setTitle("Calendar");
+    }//GEN-LAST:event_dateButtonActionPerformed
+
+    private void findRoomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findRoomButtonActionPerformed
+
+        //checking if all fields are valid
+        //checking if the client is logged in
+        if (ClientID != -1) {
+
+            //checking if the start date and end date are valid dates
+            if (checkValidStartAndEnd()) {
+
+                try {
+                    bookingTable.setVisible(true);
+                    Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Hotel_Booking_System", "isaac", "1234");
+                    Statement stmt = con.createStatement();
+
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Date is invalid");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "You are not singed in");
+        }
+    }//GEN-LAST:event_findRoomButtonActionPerformed
+
+    public boolean checkValidStartAndEnd() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        
+        try{
+            Date currentDate = new Date();
+            Date startingDate = sdf.parse(startDateLabel.getText());
+
+            if(!startingDate.before(currentDate) ){
+                return true;
+            } 
+        }catch(ParseException e){
+            System.out.println(e);
+        }
+        
+        return false;
+    }
+  
+    public ArrayList<LocalDate> checkIfRoomIsAvaliable(int RoomID) throws ParseException{
+        
+        
+        //creating an array for the dates that are found to overlap
+        ArrayList<LocalDate> overlappingDates = new ArrayList<>();
+        
+        
+        LocalDate startingDate = LocalDate.parse(startDateLabel.getText());
+        
+        //getting all of the days between the booked dates and putting them in an arraylist
+        ArrayList<LocalDate> totalBookingDates = returnListOfDatesBetween(startingDate, endingDate);
+        
+        
+        //getting the bookings from the room that is selected and doing the same thing where start and ending dates
+        //are inputted into an arraylist for each instance of booking acosiated with the room
+        
+        try{
+            Connection con = Repository.getConnection();
+            Statement stmt =  con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT startDate FROM BOOKINGS");
+            
+            
+            
+            
+            while(rs.next()){
+                
+                //creating an array for the dates in the booking the cursor is currently at
+                LocalDate instanceStartingDate = LocalDate.parse(rs.getString(1));
+                LocalDate instanceEndingDate = LocalDate.parse(rs.getString(2));
+                
+                ArrayList<LocalDate> totalInstanceOfDates = returnListOfDatesBetween(instanceStartingDate,instanceEndingDate);
+                
+                //using the two lists with the instance taken from the booking table and the dates that are currently wanting to be booked
+                //a nested for loop is used to determine if there are any duplicate dates
+                
+                for (int i = 0; i < totalBookingDates.size(); i++) {
+                    for (int j = 0; j < totalInstanceOfDates.size(); j++) {
+                        if(totalInstanceOfDates.get(j).equals(totalBookingDates.get(i))){
+                            overlappingDates.add(totalBookingDates.get(i));
+                        }
+                    }
+                }
+                
+            }
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+        return overlappingDates;
+    }
+        
     /**
      * @param args the command line arguments
      */
@@ -167,6 +361,9 @@ public class BookAppointment extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
+    private javax.swing.JTable bookingTable;
+    private javax.swing.JButton dateButton;
+    private javax.swing.JButton findRoomButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -174,9 +371,8 @@ public class BookAppointment extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel startDateLabel;
     // End of variables declaration//GEN-END:variables
 }

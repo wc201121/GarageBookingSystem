@@ -43,7 +43,8 @@ public class planner {
 //<editor-fold defaultstate="collapsed" desc="COMPLETED"> 
     //  - made starting packages,classes and JFrames, Library Functions
     //Classes:
-    //  - ALL Objects, All Library Functions (slight refining), MainMenu, ViewStaff, Login and CreateAccount (needs place of referring/storing accounts) 
+    //  - ALL Objects, All Library Functions (slight refining), MainMenu, ViewStaff, Login and CreateAccount (needs place of referring/storing accounts), AddNewTask, EmployeePay
+    //  - ViewCurrentTasks, ViewTimeSheet
     
 //</editor-fold>
 }

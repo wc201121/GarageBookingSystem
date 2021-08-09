@@ -174,8 +174,8 @@ public class AddNewUser extends javax.swing.JFrame {
             Repository.insertNewUser(user);
 
             JOptionPane.showMessageDialog(null, "New User added successfully");
-            UserMenu main = new UserMenu();
-            main.setVisible(true);
+            UserMenu um = new UserMenu();
+            um.setVisible(true);
             this.dispose();
 
         } catch (Exception e) {

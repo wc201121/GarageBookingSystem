@@ -1,5 +1,16 @@
 package UserGUIs;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import LibraryFunctions.*;
+import java.util.ArrayList;
+import Objects.*;
+
 public class UserMenu extends javax.swing.JFrame {
 
     public UserMenu() {
@@ -119,11 +130,41 @@ public class UserMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_viewstockButtonActionPerformed
 
     private void changedetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changedetailsButtonActionPerformed
-        
+        UserChangeDetails ucd = new UserChangeDetails();
+        ucd.setVisible(true);      
     }//GEN-LAST:event_changedetailsButtonActionPerformed
 
     private void deleteaccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteaccountButtonActionPerformed
+     
+//        ArrayList<User> userList = Repository.getCurrentUser();
         
+        int response = JOptionPane.showConfirmDialog(this, "Do you want to continue this action?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+                //getting the selected user and putting them in assigned values
+                String userID = Repository.getCurrentUser().getUser_Id();
+                String userFirstName = Repository.getCurrentUser().getUser_Fname();
+                String userSecondName = Repository.getCurrentUser().getUser_Lname();
+
+                int confirmed = JOptionPane.showConfirmDialog(null,
+                           "Are you sure you want to delete " + userFirstName + " " + userSecondName + "?", null,JOptionPane.YES_NO_OPTION);
+
+                if (confirmed == JOptionPane.YES_OPTION) {
+
+                    //if the admin said yes the slected user will be deleted here
+                    try {
+                        Connection con = Repository.getConnection();
+
+                        PreparedStatement ps = con.prepareStatement("DELETE FROM CLIENTDETAILS WHERE CLIENTID = " + userID);
+                        ps.executeUpdate();
+
+                        JOptionPane.showMessageDialog(null, "Successfully deleted " + userFirstName + " " + userSecondName);
+
+                    } catch (SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+            }      
     }//GEN-LAST:event_deleteaccountButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
@@ -149,13 +190,17 @@ public class UserMenu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserMenu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserMenu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserMenu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserMenu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

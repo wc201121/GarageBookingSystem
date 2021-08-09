@@ -5,6 +5,14 @@
  */
 package StaffGUIs;
 
+import java.util.ArrayList;
+import Objects.*;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import LibraryFunctions.*;
+
+
 /**
  *
  * @author wc201121
@@ -16,6 +24,32 @@ public class ViewCurrentTasks extends javax.swing.JFrame {
      */
     public ViewCurrentTasks() {
         initComponents();
+        updateTable();
+    }
+
+    public void updateTable() {
+        try {
+            //This gets the current lsit of projects for the current logged in user
+            ArrayList<Task> projectList = Repository.getEmployeesTasks(Repository.getCurrentEmployee().getEmployee_Id());
+
+            String[] columns = {"Project Title", "Start Date", "End Date"};;//Sets column names for table
+            Object[][] rows = new Object[projectList.size()][columns.length];//2D object array used for tableModel rows
+
+            for (int i = 0; i < projectList.size(); i++) { //Loops through all of the rows in the database
+                rows[i][0] = projectList.get(i).getTask_Title();
+                rows[i][1] = projectList.get(i).getTask_StartDate();
+                rows[i][2] = projectList.get(i).getTask_EndDate();
+            }
+
+            //This sets up our new tableModel
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    rows,
+                    columns
+            ));
+
+        } catch (Exception e) {
+            System.out.println("Error in CurrentUsersProjects: " + e);
+        }
     }
 
     /**

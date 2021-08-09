@@ -5,10 +5,14 @@
  */
 package StaffGUIs;
 
-/**
- *
- * @author wc201121
- */
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import LibraryFunctions.*;
+
 public class EmployeePay extends javax.swing.JFrame {
 
     /**
@@ -16,6 +20,55 @@ public class EmployeePay extends javax.swing.JFrame {
      */
     public EmployeePay() {
         initComponents();
+        setDefaultDateRange();
+        updateTable();
+    }
+
+    public void updateTable() {
+        try {
+            HashMap<String, Integer> employeeHoursList = Repository.getAllEmployeeHoursInDateRange(fromDateField.getText(), toDateField.getText());
+
+            String[] columns = {"Employee Name", "Employee Hours", "Employee hourly pay", "Employee total pay for month"};;//Sets column names for table
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            Object[][] rows = new Object[employeeHoursList.size()][columns.length];//2D object array used for tableModel rows
+
+            Iterator<Map.Entry<String, Integer>> iterator = employeeHoursList.entrySet().iterator();
+            int counter = 0;
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(); // to format the currency output
+
+            while (iterator.hasNext()) {
+                Map.Entry<String, Integer> entry = iterator.next();
+
+                rows[counter][0] = entry.getKey();
+                rows[counter][1] = entry.getValue();
+
+                double employeePay = Repository.getEmployeePay(entry.getKey());
+                rows[counter][2] = currencyFormat.format(employeePay);
+                rows[counter][3] = currencyFormat.format(entry.getValue() * employeePay);
+                counter++;
+            }
+
+            //This sets up our new tableModel
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    rows,
+                    columns
+            ));
+
+        } catch (Exception e) {
+            System.out.println("Error in EmployeePay: " + e);
+        }
+    }
+
+    public void setDefaultDateRange() {
+        //Default date range is this month
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        Calendar todaysDate = Calendar.getInstance();
+        toDateField.setText(dateFormat.format(todaysDate.getTime()));
+
+        todaysDate.set(Calendar.DAY_OF_MONTH, 1);
+        fromDateField.setText(dateFormat.format(todaysDate.getTime()));
     }
 
     /**
@@ -27,30 +80,45 @@ public class EmployeePay extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        fromDateField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        toDateField = new javax.swing.JTextField();
+        viewButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("back");
+        backButton.setText("back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setText("From");
 
-        jTextField1.setText("jTextField1");
+        fromDateField.setText("01/01/2021");
+        fromDateField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fromDateFieldActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("To");
 
-        jTextField2.setText("jTextField2");
+        toDateField.setText("1/01/2022");
 
-        jButton2.setText("View");
+        viewButton.setText("View");
+        viewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,18 +128,18 @@ public class EmployeePay extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1))
+                        .addComponent(backButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(463, 463, 463)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fromDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
                         .addComponent(jLabel2)
                         .addGap(6, 6, 6)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(toDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(viewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -84,18 +152,32 @@ public class EmployeePay extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fromDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
+                    .addComponent(toDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewButton)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(backButton)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void fromDateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fromDateFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fromDateFieldActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        StaffMenu sm = new StaffMenu();
+        sm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
+        updateTable();
+    }//GEN-LAST:event_viewButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,13 +215,13 @@ public class EmployeePay extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton backButton;
+    private javax.swing.JTextField fromDateField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField toDateField;
+    private javax.swing.JButton viewButton;
     // End of variables declaration//GEN-END:variables
 }

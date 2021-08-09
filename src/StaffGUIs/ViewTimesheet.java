@@ -5,10 +5,15 @@
  */
 package StaffGUIs;
 
-/**
- *
- * @author wc201121
- */
+import Objects.*;
+import java.sql.Timestamp;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import LibraryFunctions.*;
+
 public class ViewTimesheet extends javax.swing.JFrame {
 
     /**
@@ -16,7 +21,56 @@ public class ViewTimesheet extends javax.swing.JFrame {
      */
     public ViewTimesheet() {
         initComponents();
+        setDefaultDateRange();
+        updateTable();
     }
+    
+        public void updateTable() {
+        try {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            
+            ArrayList<TaskTimeLog> timeLogs = Repository.getUsersTimeLogsInDateRange(Repository.getCurrentEmployee().getEmployee_Id(), fromDateField.getText(), toDateField.getText());
+            double totalpay = 0.00;
+
+            String[] columns = {"Date Logged", "Description of work", "Hours logged", "Project Name"};//Sets column names for table
+
+            Object[][] rows = new Object[timeLogs.size()][columns.length];//2D object array used for tableModel rows
+
+            for (int i = 0; i < timeLogs.size(); i++) { //Loops through all of the rows in the database
+                rows[i][0] = dateFormat.format(timeLogs.get(i).getTaskTimeLog_DateLogged());
+                rows[i][1] = timeLogs.get(i).getTaskTimeLog_DescriptionOfWork();
+                rows[i][2] = timeLogs.get(i).getTaskTimeLog_HoursLogged();
+                rows[i][3] = Repository.getTaskNameFromTimeLogID(timeLogs.get(i).getTaskTimeLog_Id());
+                totalpay = totalpay + timeLogs.get(i).getTaskTimeLog_HoursLogged() * Repository.getEmployeePay(Repository.getCurrentEmployee().getEmployee_Id());
+            }
+
+            //This sets up our new tableModel
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    rows,
+                    columns
+            ));
+
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+            PayForMonth.setText(currencyFormat.format(totalpay));
+
+        } catch (Exception e) {
+            System.out.println("Error in UserViewTimesheet: " + e);
+        }
+        
+    }
+
+    public void setDefaultDateRange() {
+        //Default date range is this month
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        Calendar todaysDate = Calendar.getInstance();
+        toDateField.setText(dateFormat.format(todaysDate.getTime()));
+        
+        todaysDate.set(Calendar.DAY_OF_MONTH, 1);
+        fromDateField.setText(dateFormat.format(todaysDate.getTime()));
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,35 +81,51 @@ public class ViewTimesheet extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        fromDateField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        toDateField = new javax.swing.JTextField();
+        viewButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        PayForMonth = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("back");
+        backButton.setText("back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setText("From");
 
+        fromDateField.setText("01/01/2021");
+
         jLabel2.setText("To");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        toDateField.setText("01/01/2022");
+        toDateField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                toDateFieldActionPerformed(evt);
             }
         });
 
-        jButton2.setText("View");
+        viewButton.setText("View");
+        viewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewButtonActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Time Sheet");
+
+        PayForMonth.setText("Total Pay : £00.00");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,25 +135,28 @@ public class ViewTimesheet extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1))
+                        .addComponent(backButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 862, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(809, 809, 809))
+                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fromDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(82, 82, 82)
                                     .addComponent(jLabel2)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jButton2))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(809, 809, 809))))))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(PayForMonth)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(toDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(viewButton))))))))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -96,21 +169,33 @@ public class ViewTimesheet extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fromDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(toDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewButton))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backButton)
+                    .addComponent(PayForMonth))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void toDateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toDateFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_toDateFieldActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        StaffMenu sm = new StaffMenu();
+        sm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
+        updateTable();
+    }//GEN-LAST:event_viewButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,14 +233,15 @@ public class ViewTimesheet extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel PayForMonth;
+    private javax.swing.JButton backButton;
+    private javax.swing.JTextField fromDateField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField toDateField;
+    private javax.swing.JButton viewButton;
     // End of variables declaration//GEN-END:variables
 }

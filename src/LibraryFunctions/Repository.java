@@ -118,7 +118,7 @@ public class Repository {
 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="User operations">
-    public static User GetCurrentUser() {
+    public static User getCurrentUser() {
         return currentUser;
     }
 
@@ -374,18 +374,50 @@ public class Repository {
             ResultSet rs = ExecuteSQL.executeQuery(getConnection(), sql);
             if (rs.next()) {
                 rs.moveToInsertRow();
-                rs.updateString("Employee_ID", user.getUser_Id());
-                rs.updateString("Employee_Lname", user.getUser_Lname());
-                rs.updateString("Employee_Fname", user.getUser_Fname());
-                rs.updateString("Employee_Password", user.getUser_Password());
-                rs.updateString("Employee_Phone", user.getUser_Phone());
-                rs.updateString("Employee_Address", user.getUser_Address());
+                rs.updateString("User_ID", user.getUser_Id());
+                rs.updateString("User_Lname", user.getUser_Lname());
+                rs.updateString("User_Fname", user.getUser_Fname());
+                rs.updateString("User_Password", user.getUser_Password());
+                rs.updateString("User_Phone", user.getUser_Phone());
+                rs.updateString("User_Address", user.getUser_Address());
                 rs.insertRow();
             }
             con.close();
         } catch (Exception e) {
             System.out.println("Error in the repository class: " + e);
         }
+    }
+    
+        public static void updateUser(User user) {
+        try {
+            String sql = "SELECT User.* FROM User where User_Id = '"  + user.getUser_Id() + "'";
+            ResultSet rs = ExecuteSQL.executeQuery(getConnection(), sql);
+            if (rs.next()) {
+                rs.updateString("User_Fname", user.getUser_Fname());
+                rs.updateString("User_Lname", user.getUser_Lname());
+                rs.updateString("User_Password", user.getUser_Password());
+                rs.updateString("User_Phone", user.getUser_Phone());
+                rs.updateString("User_Address", user.getUser_Address());
+                rs.updateRow();
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error in the repository class: " + e);
+        }
+    }
+
+    public static void removeUser(User user) {
+
+        try {
+            String sql = "DELETE Employee.* FROM Employee";
+            ResultSet rs = ExecuteSQL.executeQuery(getConnection(), sql);
+            
+
+        } catch (Exception e) {
+            System.out.println("Error in the respository calss: " + e);
+
+        }
+
     }
 
 // </editor-fold>
